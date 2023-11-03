@@ -19,3 +19,4 @@ Route::get('/lnpay/auth', [LNPaymentController::class, 'auth']);
 Route::get('/lnpay/pay', [LNPaymentController::class, 'pay']);
 Route::post('/lnpay/pay', [LNPaymentController::class, 'pay']);
 Route::post('/lnpay/confirm', [LNPaymentController::class, 'confirmPayment']);
+Route::post('/lnpay/confirmJSON', [LNPaymentController::class, 'confirmPaymentJSON']);

@@ -35,7 +35,7 @@
             </form>
             <br>
 
-            <form action="/lnpay/confirm" method="POST">
+            <form action="/lnpay/confirm" method="POST" id="confirm-payment">
                 @csrf
                 <input type="number"
                     hidden
@@ -56,5 +56,6 @@
             </form>
         </main>
         @include('style')
+        @include('script')
     </body>
 </html>
