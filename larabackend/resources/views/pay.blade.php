@@ -6,16 +6,39 @@
         <title>LNPAY</title>
     </head>
     <body>
-        <main>
-            <h1>PAYMENT DUE</h1>
-            <p>Pay {{ $amount }} to the following invoice:</p>
-            {{ $qrcode }}
-            <pre>{{ $invoiceRequest }}</pre>
+        <main class="container">
+
+            <div class="pay-area">
+
+                <h1 class="title">PAY TO RECEIVE ACCESS</h1>
+
+                <p class="text">Pay {{ $amount }} to the following invoice:</p>
+
+                <pre class="qr-code">{{ $qrcode }}</pre>
+
+                <div class="hash-content">
+                    <button class="copy-hash">Copy</button>
+                    <pre id="paireq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
+                </div>
+
+            </div>
+
             <p>After paying, you will have {{ $time }} seconds to enjoy the website.</p>
+
             <form action="/lnpay/pay" method="POST">
                 @csrf
-                <label for="time">SET THE DESIRE NUMBER OF SECONDS</label>
-                <input type="number" min="5" max="100" value="{{ $time }}" name="time" id="time">
+                <input type="hidden" value="{{ $time }}" name="time" id="time">
+
+                <div class="time-box">
+                    <p class="text">SET THE DESIRE NUMBER OF SECONDS</p>
+                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="time" />
+                </div>
+
+                <div class="reload-box">
+                    <button class="btn btn-reload">REQUEST NEW INVOICE</button>
+                </div>
+
+
                 <input type="number"
                     hidden
                     name="amount"
@@ -31,9 +54,11 @@
                     name="invoiceRequest"
                     value="{{ $invoiceRequest }}"
                     style="display: none">
-                <button>REQUEST NEW INVOICE</button>
+
             </form>
+
             <br>
+
 
             <form action="/lnpay/confirm" method="POST">
                 @csrf
@@ -54,6 +79,7 @@
                     style="display: none">
                 <button>I CONFIRM I HAVE PAID</button>
             </form>
+
         </main>
         @include('style')
     </body>
