@@ -55,5 +55,6 @@
                 <button>I CONFIRM I HAVE PAID</button>
             </form>
         </main>
+        @include('style')
     </body>
 </html>

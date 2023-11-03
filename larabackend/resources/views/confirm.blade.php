@@ -33,5 +33,6 @@
                 </form>
             @endif
         </main>
+        @include('style')
     </body>
 </html>
