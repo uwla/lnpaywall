@@ -6,15 +6,6 @@ services:
     volumes:
       - ${APP_DIR}:/app:ro
 
-  # backend:
-  #   image: python:3.6
-  #   volumes:
-  #     - ./backend:/app
-  #   working_dir: /app 
-  #   command: python main.py
-  #   expose:
-  #     - 3000
-
   lnserver:
     image: node:lts-alpine
     volumes:
