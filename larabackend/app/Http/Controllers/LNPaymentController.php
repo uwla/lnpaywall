@@ -81,6 +81,10 @@ class LNPaymentController extends Controller
             'invoiceId' => $invoiceId
         ]);
 
+        if ($request->wantsJson()) {
+            return [ 'confirmed' => $res['is_confirmed'] ];
+        }
+
         $paid = $res['is_confirmed'];
         $amount = $res['tokens'];
         $timeLeft = $amount/10;
