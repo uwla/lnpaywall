@@ -22,4 +22,17 @@
             console.log(error.response)
         });
     }, 3000);
+
+
+    function copyToClipboard() {
+        const textToCopy = document.querySelector('#payreq').innerText;
+        const temp = document.createElement('textarea');
+        temp.value = textToCopy;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+    }
+
+    document.querySelector('.copy-hash').addEventListener('click', copyToClipboard);
 </script>
