@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LNPAY</title>
+        <title>LNPAYWALl</title>
     </head>
     <body>
+        @include('style')
         <main>
             @if($paid)
                 <h1>PAYMENT DONE</h1>
@@ -36,6 +37,5 @@
                 </form>
             @endif
         </main>
-        @include('style')
     </body>
 </html>

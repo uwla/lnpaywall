@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LNPAY</title>
+        <title>LNPAYWALL</title>
     </head>
     <body>
+        @include('style')
         <main class="container">
 
             <div class="pay-area">
@@ -81,7 +82,6 @@
             </form>
 
         </main>
-        @include('style')
         @include('script')
     </body>
 </html>
