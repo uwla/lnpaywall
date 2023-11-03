@@ -3,6 +3,9 @@ node_modules
 vendor
 .env
 
+
+website/
+
 # ignore cache
 __pycache__
 .phpunit*
