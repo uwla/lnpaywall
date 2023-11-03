@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LNPaymentController extends Controller
 {
@@ -19,6 +20,7 @@ class LNPaymentController extends Controller
         return view('pay', [
             'invoiceId' => $invoice['id'],
             'invoiceRequest' => $invoice['request'],
+            'qrcode' => $this->qrcode($invoice['request']),
             'paid' => false,
         ]);
     }
@@ -47,6 +49,12 @@ class LNPaymentController extends Controller
 
         $request->session()->put('paid', $val);
 
-        return view('pay', compact('paid', 'invoiceId', 'invoiceRequest'));
+        $qrcode = $this->qrcode($invoiceRequest);
+
+        return view('pay', compact('paid', 'invoiceId', 'invoiceRequest', 'qrcode'));
+    }
+
+    public function qrcode($str) {
+        return QrCode::size(250)->generate($str);
     }
 }

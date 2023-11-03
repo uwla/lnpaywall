@@ -13,6 +13,7 @@
             @else
                 <h1>PAYMENT DUE</h1>
                 <p>Pay to the following invoice:</p>
+                {{ $qrcode }}
                 <pre>{{ $invoiceRequest }}</pre>
                 <form action="/lnpay/pay" method="POST">
                     @csrf
