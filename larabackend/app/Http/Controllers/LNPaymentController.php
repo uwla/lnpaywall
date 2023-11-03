@@ -13,7 +13,16 @@ class LNPaymentController extends Controller
         if ('y' != $session->get('paid', 'n')) {
             return false;
         }
-        if (time() > $session->get('expire_at', 0)) {
+        if (! $session->has('started_at')) {
+            $session->put('started_at', time());
+            return true;
+        }
+        $start = $session->get('started_at', 0);
+        $time = $session->get('timepaid', 0);
+        if (time() > $start+$time) {
+            $start = $session->forget('started_at');
+            $start = $session->forget('timepaid');
+            $start = $session->forget('paid');
             return false;
         }
         return true;
@@ -87,7 +96,7 @@ class LNPaymentController extends Controller
 
         $paid = $res['is_confirmed'];
         $amount = $res['tokens'];
-        $timeLeft = $amount/10;
+        $time = $amount/10;
 
         $val = '';
         if ($paid) $val = 'y';
@@ -95,7 +104,7 @@ class LNPaymentController extends Controller
 
         $session = $request->session();
         $session->put('paid', $val);
-        $session->put('expire_at', time() + $timeLeft);
+        $session->put('timepaid', $time);
 
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }
