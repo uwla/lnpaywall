@@ -17,8 +17,9 @@
                 <pre class="qr-code">{{ $qrcode }}</pre>
 
                 <div class="hash-content">
+                    <pre id="payreq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
                     <button class="copy-hash">Copy</button>
-                    <pre id="paireq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
+                    <span class="copied" >COPIED!</span>
                 </div>
 
             </div>
@@ -57,8 +58,6 @@
 
             </form>
 
-            <br>
-
             <form action="/lnpay/confirm" method="POST" id="confirm-payment">
                 @csrf
                 <input type="number"
@@ -76,7 +75,9 @@
                     name="invoiceRequest"
                     value="{{ $invoiceRequest }}"
                     style="display: none">
+                <noscript>
                 <button>I CONFIRM I HAVE PAID</button>
+                </noscript>
             </form>
 
         </main>

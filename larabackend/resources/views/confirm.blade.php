@@ -9,7 +9,10 @@
         <main>
             @if($paid)
                 <h1>PAYMENT DONE</h1>
-                <a href="/">Go back to App</a>
+                <a id="goback"  href="/">Go back to App</a>
+                <script>
+                    setInterval(() => window.location.href = "/", 3000);
+                </script>
             @else
                 <h1>PAYMENT NOT SUCCESSFUL</h1>
                 <form action="/lnpay/pay" method="POST">

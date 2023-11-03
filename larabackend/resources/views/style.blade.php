@@ -37,8 +37,17 @@ main {
 .hash-content {
     max-width: 400px;
     border: aliceblue;
-    overflow: hidden;
     resize: none;
+}
+
+#goback {
+    color: white;
+}
+
+#payreq {
+    text-wrap: wrap;
+    line-break: anywhere;
+    margin: 0;
 }
 
 .hash {
@@ -46,7 +55,11 @@ main {
 }
 
 .qr-code {
-    margin: 10px 85px;
+    margin: 40px 85px;
+}
+
+button {
+    cursor: pointer;
 }
 
 .copy-hash {
@@ -55,13 +68,29 @@ main {
     border: aliceblue;
     cursor: pointer;
     padding: 5px 15px;
-    float: right;
-    margin-bottom: -34px;
+    margin-left: auto;
     position: relative;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    display: block;
+    width: fit-content;
+    border-radius: 8px;
+    top: -1em;
 }
 
+.copied {
+    display: none;
+    color: grey;
+    text-align: right;
+    font-size: 75%;
+    margin-top: -8px;
+    font-weight: 800;
+    position: absolute;
+    margin-left: 350px;
+}
+
+button:focus-within + .copied {
+    display: block;
+
+}
 
 .btn-reload {
     color: aliceblue;
@@ -74,12 +103,15 @@ main {
 .reload-box {
     display: flex;
     justify-content: center;
-    margin: 20px;
+    margin: 10px;
 }
 
 #time {
     margin: 0 42%;
+    padding: 8px;
+    border-radius: 8px;
 }
+
 
 
 </style>
