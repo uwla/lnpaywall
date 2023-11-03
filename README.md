@@ -2,6 +2,9 @@
 
 Adds a LN Paywall for any generic webservice.
 
+WATCH THE DEMO:
+
+https://github.com/uwla/lnpaywall/assets/47862859/5e2e5b5f-9764-48a4-88cc-f5f5d553f6ea
 
 The user has to pay some amount of time to use service for a chosen time:
 
