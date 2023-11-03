@@ -22,7 +22,7 @@ services:
     working_dir: /app
     command: npm run dev
     networks:
-      - polar
+      - polarx
       - default
     ports:
       - 8080:8080
@@ -61,7 +61,7 @@ services:
       - default
 
 networks:
-  polar:
+  polarx:
     name: polar-network-1_default
     external: true
   default:
