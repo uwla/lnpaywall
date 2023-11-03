@@ -1,6 +1,7 @@
 # ignore vendor packages
 node_modules
 vendor
+.env
 
 # ignore cache
 __pycache__
