@@ -16,6 +16,8 @@ The user has to pay some amount of money to use the service for a chosen period 
 4. User can access the requested webservice
 5. After time expires, user has to go back to step 1.
 
+![diagram](./diagram.jpg)
+
 ## Advantages
 
 It can be integrated with **ANY** webservice **WITHOUT CHANGES** to the service.
