@@ -20,7 +20,7 @@ services:
 
   backend:
     build:
-      context: ./larabackend/vendor/laravel/sail/runtimes/8.2
+      context: ./backend/vendor/laravel/sail/runtimes/8.2
       dockerfile: Dockerfile
       args:
         WWWGROUP: '1000'
@@ -35,9 +35,10 @@ services:
       WWWUSER: '1000'
       LARAVEL_SAIL: 1
     volumes:
-      - ./larabackend:/var/www/html
+      - ./backend:/var/www/html
+    working_dir: /var/www/html
     restart: unless-stopped
-    command: php -d variables_order=EGPCS /var/www/html/artisan serve --host 0.0.0.0  --port 80
+    command: php -d variables_order=EGPCS artisan serve --host 0.0.0.0 --port 80
     networks:
       - default
 
