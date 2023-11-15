@@ -20,9 +20,9 @@ class LNPaymentController extends Controller
         $start = $session->get('started_at', 0);
         $time = $session->get('timepaid', 0);
         if (time() > $start+$time) {
-            $start = $session->forget('started_at');
-            $start = $session->forget('timepaid');
-            $start = $session->forget('paid');
+            $session->forget('started_at');
+            $session->forget('timepaid');
+            $session->forget('paid');
             return false;
         }
         return true;
