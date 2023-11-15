@@ -11,7 +11,7 @@ services:
     volumes:
       - ./lnserver:/app
     working_dir: /app
-    command: npm run dev
+    command: sh -c 'npm install && npm run dev'
     networks:
       - polar
       - default
@@ -21,7 +21,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile-backend
+      dockerfile: Dockerfile
       args:
         WWWGROUP: '1000'
     image: sail-8.2/app
@@ -38,7 +38,7 @@ services:
       - ./backend:/var/www/html
     working_dir: /var/www/html
     restart: unless-stopped
-    command: php -d variables_order=EGPCS artisan serve --host 0.0.0.0 --port 80
+    command: sh -c 'composer install && php -d variables_order=EGPCS artisan serve --host 0.0.0.0 --port 80'
     networks:
       - default
 
