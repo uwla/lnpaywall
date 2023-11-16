@@ -133,5 +133,9 @@ docker-compose up -d
 
 ## Notes
 
-This is a proof-of-concept only coded in two days.
+Currently, this is a proof-of-concept only.
+
+## LICENSE
+
+MIT.
 
