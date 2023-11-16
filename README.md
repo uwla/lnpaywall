@@ -93,6 +93,26 @@ The `-u 1000` flag tells docker to run the command with uuid 1000 and not as the
 root user (which is the default); otherwise it could assign root permissions  to
 the `.env`.
 
+### frontend
+
+The frontend can be any webservice running on a docker container.
+
+The frontend container must be attached to an external network, so the paywall
+container can connect to it.
+
+Here is an example of how to setup the frontend container:
+
+```bash
+docker network create frontendnet
+mkdir website && echo "hello world!" > website/hello.txt
+docker container run -d --name frontend --network frontendnet -v ./website:/app:ro evop/static_webserver
+```
+
+**Summary** of the above: First, we create the network. Then, we create a  basic
+static website. Finally we run a docker container in detached mode connected  to
+the network we defined earlier and map  the  website  to  the  default  location
+expected by the container image.
+
 ### docker
 
 Copy `.env.sample` to `.env`:
@@ -104,18 +124,16 @@ cp .env.sample .env
 Adjust the values if needed:
 
 ```
-APP_DIR=./website
 LN_NETWORK=polar-network-1_default
+FRONTEND=http://frontend_container:8080
+FRONTEND_NETWORK=frontend_network
 ```
 
 Where:
 
-- `APP_DIR`: the path to a static HTML website
 - `LN_NETWORK`: the name of the Docker network used by Polar.
-
-The `APP_DIR` must point to a directory with static html files. This is just for
-now. Later, the project will have support  for  any  kind  of  website  (dynamic
-websites, webplatforms, streaming services, etc).
+- `FRONTEND`: protocol + hostname/IP + port of an existing docker container
+- `FRONTEND_NETWORK`: a docker network attached to the frontend container
 
 After that, bring the containers up:
 
