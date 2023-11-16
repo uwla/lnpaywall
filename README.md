@@ -105,13 +105,13 @@ Adjust the values if needed:
 
 ```
 APP_DIR=./website
-POLAR_NETWORK=polar-network-1_default
+LN_NETWORK=polar-network-1_default
 ```
 
 Where:
 
 - `APP_DIR`: the path to a static HTML website
-- `POLAR_NETWORK`: the name of the Docker network used by Polar.
+- `LN_NETWORK`: the name of the Docker network used by Polar.
 
 The `APP_DIR` must point to a directory with static html files. This is just for
 now. Later, the project will have support  for  any  kind  of  website  (dynamic

@@ -13,7 +13,7 @@ services:
     working_dir: /app
     command: sh -c 'npm install && npm run dev'
     networks:
-      - polar
+      - ln-network
       - default
     ports:
       - 8080:8080
@@ -53,8 +53,8 @@ services:
       - default
 
 networks:
-  polar:
-    name: polar-network-1_default
+  ln-network:
+    name: ${LN_NETWORK}
     external: true
   default:
     driver: bridge
