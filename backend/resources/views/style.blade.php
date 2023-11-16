@@ -14,30 +14,28 @@ body {
     display: flex;
     background: linear-gradient(#151c2e, #1b1f29);
     color: #fff;
+    padding: 24px 16px;
 }
 
 main {
     min-height: 100vh;
-    padding: 64px;
+    margin: 0 auto;
 }
 
-.title, .text {
+h1, p {
     text-align: center;
 }
 
-.time-box {
-    padding: 10px;
-}
-
-.container {
-    margin: 0 auto;
-    display: inline-block;
+#timebox {
+    margin-top: 3em;
+    margin-bottom: 3em;
 }
 
 .hash-content {
     max-width: 400px;
     border: aliceblue;
     resize: none;
+    margin: 0 auto;
 }
 
 #goback {
@@ -47,6 +45,7 @@ main {
 #payreq {
     text-wrap: wrap;
     line-break: anywhere;
+    white-space: pre-wrap;
     margin: 0;
 }
 
@@ -54,8 +53,9 @@ main {
     color: #fff;
 }
 
-.qr-code {
-    margin: 40px 85px;
+#qrcode svg {
+    display: block;
+    margin: 0 auto;
 }
 
 button {
@@ -89,29 +89,24 @@ button {
 
 button:focus-within + .copied {
     display: block;
-
 }
 
-.btn-reload {
+#btn-newinvoice {
     color: aliceblue;
     padding: 15px 20px;
     border: bisque;
     border-radius: 5px;
     background: #932828;
+    margin: 1.5em auto;
+    display: block
 }
 
-.reload-box {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-#time {
-    margin: 0 42%;
+#timeinput {
+    display: block;
+    margin: 0 auto;
     padding: 8px;
     border-radius: 8px;
+    min-width: 200px;
 }
-
-
 
 </style>

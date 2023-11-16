@@ -7,22 +7,18 @@
     </head>
     <body>
         @include('style')
-        <main class="container">
+        <main>
 
-            <div class="pay-area">
+            <h1>PAY TO RECEIVE ACCESS</h1>
 
-                <h1 class="title">PAY TO RECEIVE ACCESS</h1>
+            <p>Pay {{ $amount }} to the following invoice:</p>
 
-                <p class="text">Pay {{ $amount }} to the following invoice:</p>
+            <pre id="qrcode">{{ $qrcode }}</pre>
 
-                <pre class="qr-code">{{ $qrcode }}</pre>
-
-                <div class="hash-content">
-                    <pre id="payreq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
-                    <button class="copy-hash">Copy</button>
-                    <span class="copied" >COPIED!</span>
-                </div>
-
+            <div class="hash-content">
+                <pre id="payreq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
+                <button class="copy-hash">Copy</button>
+                <span class="copied" >COPIED!</span>
             </div>
 
             <p>After paying, you will have {{ $time }} seconds to enjoy the website.</p>
@@ -31,13 +27,10 @@
                 @csrf
                 <input type="hidden" value="{{ $time }}" name="time" id="time">
 
-                <div class="time-box">
-                    <p class="text">SET THE DESIRE NUMBER OF SECONDS</p>
-                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="time" />
-                </div>
-
-                <div class="reload-box">
-                    <button class="btn btn-reload">REQUEST NEW INVOICE</button>
+                <div id="timebox">
+                    <p>SET THE DESIRE NUMBER OF SECONDS</p>
+                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="timeinput" />
+                    <button id="btn-newinvoice">REQUEST NEW INVOICE</button>
                 </div>
 
 
