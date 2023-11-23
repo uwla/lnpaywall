@@ -32,6 +32,21 @@ The simpler approach (currently) is to change 4 lines of code in docker-compose.
 
 ## Local setup
 
+### automated setup
+
+The  script  `./setup-wizard.sh`  automates  the  process  of  configuring   the
+`lnserver`, the `backend` and the `frontend`. Just run:
+
+```bash
+./setup-wizard.sh
+```
+
+It will prompt for values of  `environment`  variables,  then  will  create  the
+`.env` files, bring up docker, and generate the backend's application key.
+
+The only thing this script does not do is to set up Polar. For that, you have to
+do it yourself.
+
 ### polar
 
 Set up a local LN network using Polar, with at least two LND nodes.
@@ -40,7 +55,7 @@ Set up a local LN network using Polar, with at least two LND nodes.
 
 Create `env` file at `lnserver/.env`:
 
-```basy
+```bash
 cd lnserver/ && cp .env.sample .env
 ```
 
