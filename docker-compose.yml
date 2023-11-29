@@ -11,6 +11,8 @@ services:
     networks:
       - ln-network
       - paywall-network
+    expose:
+      - 8080
 
   backend:
     container_name: lnpaywall-authbackend
