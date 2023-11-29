@@ -71,7 +71,7 @@ class LNPaymentController extends Controller
     }
 
     public function getInvoice($amount = 300) {
-        $response = Http::post('lnserver:8080/api/invoices', [
+        $response = Http::post(config('lnserver.endpoint.invoice.new'), [
             'amount' => $amount
         ]);
         $invoice = $response['invoice'];
@@ -86,7 +86,7 @@ class LNPaymentController extends Controller
         $invoiceId = $request->invoiceId;
         $invoiceRequest = $request->invoiceRequest;
 
-        $res = Http::post('lnserver:8080/api/invoices/status', [
+        $res = Http::post(config('lnserver.endpoint.invoice.status'), [
             'invoiceId' => $invoiceId
         ]);
 
