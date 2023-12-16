@@ -15,9 +15,9 @@ services:
       - 8080
 
   backend:
-    container_name: lnpaywall-authbackend
+    container_name: lnpaywall-backend
     build:
-      context: ./laravel_sail_8-3
+      context: ./backend/docker
       args:
         WWWGROUP: '1000'
     image: sail-8.2/app
