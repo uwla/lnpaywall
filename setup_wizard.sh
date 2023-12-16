@@ -84,7 +84,7 @@ APP_KEY=${BACKEND_APP_KEY}
 APP_ENV=local
 APP_DEBUG=true
 FRONTEND_URI=${FRONTEND_URI}
-LNSERVER_URI=http://lnpaywall-lnserver
+LNSERVER_URI=http://lnpaywall-lnserver:8080
 EOF
 }
 
