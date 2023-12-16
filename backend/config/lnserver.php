@@ -13,8 +13,8 @@ return [
     'endpoint' => [
         // invoice endpoints
         'invoice' => [
-            'new' => 'lnserver:8080/api/invoices',
-            'status' => 'lnserver:8080/api/invoices/status',
+            'new' => env('LNSERVER_URI') . '/api/invoices',
+            'status' => env('LNSERVER_URI') . '/api/invoices/status',
         ],
         // other endpoints would go here, if necessary
     ],

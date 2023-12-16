@@ -8,19 +8,22 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LNPaymentController extends Controller
 {
-     public function pay(Request $request) {
+    protected $satoshis_per_second = 1;
+
+    public function pay(Request $request)
+    {
         $data = [];
         $fields = ['amount', 'invoiceId', 'invoiceRequest'];
         $hasInvoice = true;
 
         foreach ($fields as $field) {
-            if (! $request->has($field))
+            if (!$request->has($field))
                 $hasInvoice = false;
             else
                 $data[$field] = $request->get($field);
         }
 
-        if (! $hasInvoice || $request->has('time')) {
+        if (!$hasInvoice || $request->has('time')) {
             $time = 20;
             if ($request->has('time')) {
                 $request->validate([
@@ -28,8 +31,7 @@ class LNPaymentController extends Controller
                 ]);
                 $time = $request->time;
             }
-            $satoshis_per_second = 10;
-            $new_amount = $time * $satoshis_per_second;
+            $new_amount = $time * $this->satoshis_per_second;
 
             $invoice = $this->getInvoice($new_amount);
             $data['amount'] = $invoice['tokens'];
@@ -37,13 +39,14 @@ class LNPaymentController extends Controller
             $data['invoiceRequest'] = $invoice['request'];
         }
 
-        $data['time'] = $data['amount']/10;
-        $data['qrcode'] = $this->qrcode($data['invoiceRequest']);
+        $data['time'] = $data['amount'] / $this->satoshis_per_second;
+        $data['qrcode'] = $this->qrCode($data['invoiceRequest']);
 
         return view('pay', $data);
     }
 
-    public function getInvoice($amount = 300) {
+    public function getInvoice($amount = 300)
+    {
         $response = Http::post(config('lnserver.endpoint.invoice.new'), [
             'amount' => $amount
         ]);
@@ -51,7 +54,8 @@ class LNPaymentController extends Controller
         return $invoice;
     }
 
-    public function confirmPayment(Request $request) {
+    public function confirmPayment(Request $request)
+    {
         $request->validate([
             'invoiceId' => 'string|required|min:1',
             'invoiceRequest' => 'string|required|min:1',
@@ -64,16 +68,18 @@ class LNPaymentController extends Controller
         ]);
 
         if ($request->wantsJson()) {
-            return [ 'confirmed' => $res['is_confirmed'] ];
+            return ['confirmed' => $res['is_confirmed']];
         }
 
         $paid = $res['is_confirmed'];
         $amount = $res['tokens'];
-        $time = $amount/10;
+        $time = $amount / $this->satoshis_per_second;
 
         $val = '';
-        if ($paid) $val = 'y';
-        else $val = 'n';
+        if ($paid)
+            $val = 'y';
+        else
+            $val = 'n';
 
         $session = $request->session();
         $session->put('paid', $val);
@@ -82,7 +88,8 @@ class LNPaymentController extends Controller
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }
 
-    public function qrcode($str) {
+    public function qrCode($str)
+    {
         return QrCode::size(250)->generate($str);
     }
 }
