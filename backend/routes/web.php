@@ -37,7 +37,7 @@ function filter_headers($headers)
 }
 
 Route::middleware(EnsurePaidSats::class)->any('/{path}', function() {
-    $base_uri = env('FRONTEND_URL', 'http://localhost');
+    $base_uri = env('FRONTEND_URI', 'http://localhost');
 
     // create http client
     $client = new GuzzleHttp\Client([

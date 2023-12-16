@@ -1,13 +1,13 @@
 #!/bin/bash
 
-declare FRONTEND
+declare FRONTEND_URI
 declare FRONTEND_NETWORK
 declare LND_CERT
 declare LND_MACAROON
 declare LND_SOCKET
 declare LN_NETWORK
 declare BACKEND_APP_KEY
-declare -r VARS=('FRONTEND' 'FRONTEND_NETWORK' 'LND_CERT' 'LND_MACAROON' 'LND_SOCKET' 'LN_NETWORK')
+declare -r VARS=('FRONTEND_URI' 'FRONTEND_NETWORK' 'LND_CERT' 'LND_MACAROON' 'LND_SOCKET' 'LN_NETWORK')
 
 # switch to this script's directory in order to relative paths work
 cd "$(dirname "$0")" || exit 1
@@ -40,7 +40,7 @@ function set_defaults()
   local polar_lnd_macaroon="${HOME}/.polar/networks/1/volumes/lnd/alice/data/chain/bitcoin/regtest/admin.macaroon"
 
   # docker envs
-  read_from_env ./.env 'FRONTEND_NETWORK' 'frontnednet'
+  read_from_env ./.env 'FRONTEND_NETWORK' 'frontendnet'
   read_from_env ./.env 'LN_NETWORK' 'polar-network-1_default'
 
   # lnserver envs
@@ -51,7 +51,7 @@ function set_defaults()
   read_from_env ./lnserver/.env 'LND_SOCKET' 'polar-n1-alice:10009'
 
   # backend envs
-  read_from_env ./backend/.env 'FRONTEND' 'http://frontend:8080'
+  read_from_env ./backend/.env 'FRONTEND_URI' 'http://frontend:8080'
   read_from_env ./backend/.env 'BACKEND_APP_KEY' "base64:$(openssl rand -base64 32)"
 }
 
@@ -83,8 +83,8 @@ APP_NAME=LNPAYWALL
 APP_KEY=${BACKEND_APP_KEY}
 APP_ENV=local
 APP_DEBUG=true
-FRONTEND_URL=${FRONTEND}
-LNSERVER_URL=lnpaywall-lnserver
+FRONTEND_URI=${FRONTEND_URI}
+LNSERVER_URI=http://lnpaywall-lnserver
 EOF
 }
 
