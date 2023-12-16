@@ -8,34 +8,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LNPaymentController extends Controller
 {
-    public function hasPaid(Request $request) {
-        $session = $request->session();
-        if ('y' != $session->get('paid', 'n')) {
-            return false;
-        }
-        if (! $session->has('started_at')) {
-            $session->put('started_at', time());
-            return true;
-        }
-        $start = $session->get('started_at', 0);
-        $time = $session->get('timepaid', 0);
-        if (time() > $start+$time) {
-            $session->forget('started_at');
-            $session->forget('timepaid');
-            $session->forget('paid');
-            return false;
-        }
-        return true;
-    }
-
-    public function auth(Request $request) {
-        if ($this->hasPaid($request)) {
-            return response('', 204);
-        }
-        return response('', 401);
-    }
-
-    public function pay(Request $request) {
+     public function pay(Request $request) {
         $data = [];
         $fields = ['amount', 'invoiceId', 'invoiceRequest'];
         $hasInvoice = true;
