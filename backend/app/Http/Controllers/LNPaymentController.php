@@ -8,8 +8,16 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LNPaymentController extends Controller
 {
+    /**
+     * The amount of satoshis paid per second of access.
+     *
+     * @var string
+     */
     protected $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
 
+    /**
+     * Show the payment page.
+     */
     public function pay(Request $request)
     {
         $data = [];
@@ -45,6 +53,9 @@ class LNPaymentController extends Controller
         return view('pay', $data);
     }
 
+    /**
+     * Get LN invoice for the given amount.
+     */
     public function getInvoice($amount = 300)
     {
         $response = Http::post(config('lnpaywall.endpoint.invoice.new'), [
@@ -54,6 +65,10 @@ class LNPaymentController extends Controller
         return $invoice;
     }
 
+    /**
+     * Confirm payment has been made.
+     * Return either JSON or confirmation webpage, depending on request headers.
+     */
     public function confirmPayment(Request $request)
     {
         $request->validate([
@@ -88,6 +103,9 @@ class LNPaymentController extends Controller
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }
 
+    /**
+     * Generate QR Code SVG for the given string, to be displayed as HTML in payment page.
+     */
     public function qrCode($str)
     {
         return QrCode::size(250)->generate($str);
