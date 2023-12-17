@@ -51,12 +51,12 @@ class EnsurePaidSats
         // Payment done and already accessed before.
         // Needs to verify if there is time remaining.
         $start = $session->get('started_at', 0);
-        $time = $session->get('timepaid', 0);
+        $time = $session->get('time_paid', 0);
         if (time() > $start+$time)
         {
             // Time has expired. Delete session information.
             $session->forget('started_at');
-            $session->forget('timepaid');
+            $session->forget('time_paid');
             $session->forget('paid');
             return false;
         }

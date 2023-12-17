@@ -26,7 +26,7 @@ h1, p {
     text-align: center;
 }
 
-#timebox {
+#time-box {
     margin-top: 3em;
     margin-bottom: 3em;
 }
@@ -38,11 +38,11 @@ h1, p {
     margin: 0 auto;
 }
 
-#goback {
+#go-back {
     color: white;
 }
 
-#payreq {
+#pay-req {
     text-wrap: wrap;
     line-break: anywhere;
     white-space: pre-wrap;
@@ -53,7 +53,7 @@ h1, p {
     color: #fff;
 }
 
-#qrcode svg {
+#qrCode svg {
     display: block;
     margin: 0 auto;
 }
@@ -91,7 +91,7 @@ button:focus-within + .copied {
     display: block;
 }
 
-#btn-newinvoice {
+#btn-new-invoice, #btn-confirm-payment {
     color: aliceblue;
     padding: 15px 20px;
     border: bisque;
@@ -101,7 +101,7 @@ button:focus-within + .copied {
     display: block
 }
 
-#timeinput {
+#time-input {
     display: block;
     margin: 0 auto;
     padding: 8px;

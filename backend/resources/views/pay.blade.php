@@ -8,15 +8,14 @@
     <body>
         @include('style')
         <main>
-
             <h1>PAY TO RECEIVE ACCESS</h1>
 
             <p>Pay {{ $amount }} to the following invoice:</p>
 
-            <pre id="qrcode">{{ $qrcode }}</pre>
+            <pre id="qrCode">{{ $qrCode }}</pre>
 
             <div class="hash-content">
-                <pre id="payreq" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
+                <pre id="pay-req" class="hash" rows="5">{{ $invoiceRequest  }}</pre>
                 <button class="copy-hash">Copy</button>
                 <span class="copied" >COPIED!</span>
             </div>
@@ -25,14 +24,14 @@
 
             <form action="/lnpay/pay" method="POST">
                 @csrf
+
                 <input type="hidden" value="{{ $time }}" name="time" id="time">
 
-                <div id="timebox">
+                <div id="time-box">
                     <p>SET THE DESIRE NUMBER OF SECONDS</p>
-                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="timeinput" />
-                    <button id="btn-newinvoice">REQUEST NEW INVOICE</button>
+                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="time-input" />
+                    <button id="btn-new-invoice">REQUEST NEW INVOICE</button>
                 </div>
-
 
                 <input type="number"
                     hidden

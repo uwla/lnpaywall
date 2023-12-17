@@ -48,7 +48,7 @@ class LNPaymentController extends Controller
         }
 
         $data['time'] = $data['amount'] / $this->satoshis_per_second;
-        $data['qrcode'] = $this->qrCode($data['invoiceRequest']);
+        $data['qrCode'] = $this->qrCode($data['invoiceRequest']);
 
         return view('pay', $data);
     }
@@ -98,7 +98,7 @@ class LNPaymentController extends Controller
 
         $session = $request->session();
         $session->put('paid', $val);
-        $session->put('timepaid', $time);
+        $session->put('time_paid', $time);
 
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }

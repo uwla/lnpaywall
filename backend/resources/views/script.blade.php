@@ -25,7 +25,7 @@
 
 
     function copyToClipboard() {
-        const textToCopy = document.querySelector('#payreq').innerText;
+        const textToCopy = document.querySelector('#pay-req').innerText;
         const temp = document.createElement('textarea');
         temp.value = textToCopy;
         document.body.appendChild(temp);
