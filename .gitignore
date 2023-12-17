@@ -4,7 +4,9 @@ vendor
 .env
 .env.bak
 
-website/
+# editor files
+.vscode
+.vim
 
 # ignore cache
 __pycache__
@@ -30,22 +32,6 @@ __pycache__
 *.mov
 *.mkv
 *.webm
-
-# ignore R files
-.RData
-.Rproj.user
-*.Rproj.user
-*.Rhistory
-*.Rproj
-Rplots.pdf
-
-# ignore LaTeX builds
-*.log
-*.fls
-*.fdb_latexmk
-*.aux
-*.synctex.gz
-_minted-*
 
 # ignore other IDE files
 tags
