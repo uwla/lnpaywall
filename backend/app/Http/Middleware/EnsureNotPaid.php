@@ -24,6 +24,6 @@ class EnsureNotPaid extends EnsurePaidSats
 
         // Otherwise, we do not show the payment page.
         // Instead, we proxy the request to the FRONTEND and return back the response.
-        return (new HttpProxyController)->redirect();
+        return (new HttpProxyController)->proxy();
     }
 }

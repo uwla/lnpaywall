@@ -9,13 +9,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class LNPaymentController extends Controller
 {
     /**
-     * The amount of satoshis paid per second of access.
-     *
-     * @var string
-     */
-    protected $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
-
-    /**
      * Show the payment page.
      */
     public function pay(Request $request)
@@ -23,6 +16,7 @@ class LNPaymentController extends Controller
         $data = [];
         $fields = ['amount', 'invoiceId', 'invoiceRequest'];
         $hasInvoice = true;
+        $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
 
         foreach ($fields as $field) {
             if (!$request->has($field))
@@ -39,7 +33,7 @@ class LNPaymentController extends Controller
                 ]);
                 $time = $request->time;
             }
-            $new_amount = $time * $this->satoshis_per_second;
+            $new_amount = $time * $satoshis_per_second;
 
             $invoice = $this->getInvoice($new_amount);
             $data['amount'] = $invoice['tokens'];
@@ -47,7 +41,7 @@ class LNPaymentController extends Controller
             $data['invoiceRequest'] = $invoice['request'];
         }
 
-        $data['time'] = $data['amount'] / $this->satoshis_per_second;
+        $data['time'] = $data['amount'] / $satoshis_per_second;
         $data['qrCode'] = $this->qrCode($data['invoiceRequest']);
 
         return view('pay', $data);
@@ -58,9 +52,8 @@ class LNPaymentController extends Controller
      */
     public function getInvoice($amount = 300)
     {
-        $response = Http::post(config('lnpaywall.endpoint.invoice.new'), [
-            'amount' => $amount
-        ]);
+        $endpoint_invoice_new = config('lnpaywall.endpoint.invoice.new');
+        $response = Http::post($endpoint_invoice_new, ['amount' => $amount]);
         $invoice = $response['invoice'];
         return $invoice;
     }
@@ -77,10 +70,10 @@ class LNPaymentController extends Controller
         ]);
         $invoiceId = $request->invoiceId;
         $invoiceRequest = $request->invoiceRequest;
+        $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
+        $endpoint_invoice_status = config('lnpaywall.endpoint.invoice.status');
 
-        $res = Http::post(config('lnpaywall.endpoint.invoice.status'), [
-            'invoiceId' => $invoiceId
-        ]);
+        $res = Http::post($endpoint_invoice_status, ['invoiceId' => $invoiceId]);
 
         if ($request->wantsJson()) {
             return ['confirmed' => $res['is_confirmed']];
@@ -88,7 +81,7 @@ class LNPaymentController extends Controller
 
         $paid = $res['is_confirmed'];
         $amount = $res['tokens'];
-        $time = $amount / $this->satoshis_per_second;
+        $time = $amount / $satoshis_per_second;
 
         $val = '';
         if ($paid)

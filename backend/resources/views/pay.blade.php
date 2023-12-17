@@ -29,7 +29,7 @@
 
                 <div id="time-box">
                     <p>SET THE DESIRE NUMBER OF SECONDS</p>
-                    <input type="number" min="1" max="100" value="{{ $time }}" name="time" id="time-input" />
+                    <input type="number" min="1" value="{{ $time }}" name="time" id="time-input" />
                     <button id="btn-new-invoice">REQUEST NEW INVOICE</button>
                 </div>
 
