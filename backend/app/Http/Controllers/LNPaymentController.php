@@ -8,7 +8,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LNPaymentController extends Controller
 {
-    protected $satoshis_per_second = 1;
+    protected $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
 
     public function pay(Request $request)
     {
@@ -47,7 +47,7 @@ class LNPaymentController extends Controller
 
     public function getInvoice($amount = 300)
     {
-        $response = Http::post(config('lnserver.endpoint.invoice.new'), [
+        $response = Http::post(config('lnpaywall.endpoint.invoice.new'), [
             'amount' => $amount
         ]);
         $invoice = $response['invoice'];
@@ -63,7 +63,7 @@ class LNPaymentController extends Controller
         $invoiceId = $request->invoiceId;
         $invoiceRequest = $request->invoiceRequest;
 
-        $res = Http::post(config('lnserver.endpoint.invoice.status'), [
+        $res = Http::post(config('lnpaywall.endpoint.invoice.status'), [
             'invoiceId' => $invoiceId
         ]);
 
