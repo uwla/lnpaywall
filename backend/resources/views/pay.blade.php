@@ -69,7 +69,7 @@
                     value="{{ $invoiceRequest }}"
                     style="display: none">
                 <noscript>
-                <button>I CONFIRM I HAVE PAID</button>
+                <button id="btn-confirm-payment">I CONFIRM I HAVE PAID</button>
                 </noscript>
             </form>
 

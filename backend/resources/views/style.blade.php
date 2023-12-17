@@ -97,8 +97,12 @@ button:focus-within + .copied {
     border: bisque;
     border-radius: 5px;
     background: #932828;
-    margin: 1.5em auto;
+    margin: 1em auto;
     display: block
+}
+
+#btn-confirm-payment {
+    background: green;
 }
 
 #time-input {
