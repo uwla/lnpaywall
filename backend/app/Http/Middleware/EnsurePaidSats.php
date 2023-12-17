@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+// This middleware ensures the user has paid satoshis before accessing the requested resource.
 class EnsurePaidSats
 {
     /**
@@ -15,13 +16,23 @@ class EnsurePaidSats
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // If user has paid, allow him to proceed.
         if ($this->hasPaid($request))
             return $next($request);
+
+        // Otherwise, redirect him to payment page.
         return redirect()->route('lnpay.pay');
     }
 
+    /**
+     * Determine whether the user making the request has paid to access the web service.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return boolean
+     */
     public function hasPaid(Request $request)
     {
+        // Get the session associated with the request.
         $session = $request->session();
 
         // has not paid
