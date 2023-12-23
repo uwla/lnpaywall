@@ -31,7 +31,7 @@ h1, p {
     width: fit-content;
     display: flex;
     flex-direction: column;
-    gap: .5em;
+    gap: .75em;
 }
 
 .hash-content {

@@ -20,7 +20,16 @@
                 <span class="copied" >COPIED!</span>
             </div>
 
-            <p>After paying, you will have {{ $hours }} hours and {{ $minutes }} minutes to enjoy the website.</p>
+            @php
+                if ($hours == 0)
+                    $msg = "${minutes} minutes";
+                else if ($minutes == 0)
+                    $msg = "${hours} hours";
+                else
+                    $msg = "${hours} hours and ${minutes} minutes";
+            @endphp
+
+            <p>After paying, you will have {{ $msg }} to enjoy the website.</p>
 
             <form action="/lnpay/pay" method="POST">
                 @csrf
@@ -28,7 +37,7 @@
                 <div id="time-box">
                     <p>Or, request a new invoice:</p>
                     <span>
-                        <input class="time-input" type="number" min="1" max="23"
+                        <input class="time-input" type="number" min="0" max="23"
                             name="hours" value="{{ $hours }}" />
                         <label for="minutes">HOURS</label>
                     </span>
