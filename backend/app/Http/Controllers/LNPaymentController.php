@@ -25,23 +25,36 @@ class LNPaymentController extends Controller
                 $data[$field] = $request->get($field);
         }
 
-        if (!$hasInvoice || $request->has('time')) {
-            $time = 20;
-            if ($request->has('time')) {
-                $request->validate([
-                    'time' => 'integer|min:4|max:1000'
-                ]);
-                $time = $request->time;
-            }
+        # if there is no invoice, or if the user requests a new one
+        if (!$hasInvoice || $request->has('minutes') || $request->has('hours')) {
+            # validation
+            $request->validate([
+                'minutes' => 'nullable|integer|min:0|max:59',
+                'hours' => 'nullable|integer|min:0|max:23',
+            ]);
+
+            # convert units to seconds
+            $minutes = $request->get('minutes', 0);
+            $hours = $request->get('hours', 0);
+            $time = 60*$minutes + 3600*$hours;
+
+            # minimum time is 5 minutes
+            if ($time < 300)
+                $time = 300;
+
+            # compute amount
             $new_amount = $time * $satoshis_per_second;
 
+            # generate new invoice
             $invoice = $this->getInvoice($new_amount);
             $data['amount'] = $invoice['tokens'];
             $data['invoiceId'] = $invoice['id'];
             $data['invoiceRequest'] = $invoice['request'];
         }
 
-        $data['time'] = $data['amount'] / $satoshis_per_second;
+        $time = $data['amount'] / $satoshis_per_second;
+        $data['hours'] = (int) ($time / 3600);
+        $data['minutes'] = (int) (($time % 3600) / 60);
         $data['qrCode'] = $this->qrCode($data['invoiceRequest']);
 
         return view('pay', $data);

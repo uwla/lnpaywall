@@ -20,16 +20,23 @@
                 <span class="copied" >COPIED!</span>
             </div>
 
-            <p>After paying, you will have {{ $time }} seconds to enjoy the website.</p>
+            <p>After paying, you will have {{ $hours }} hours and {{ $minutes }} minutes to enjoy the website.</p>
 
             <form action="/lnpay/pay" method="POST">
                 @csrf
 
-                <input type="hidden" value="{{ $time }}" name="time" id="time">
-
                 <div id="time-box">
-                    <p>SET THE DESIRE NUMBER OF SECONDS</p>
-                    <input type="number" min="1" value="{{ $time }}" name="time" id="time-input" />
+                    <p>Or, request a new invoice:</p>
+                    <span>
+                        <input class="time-input" type="number" min="1" max="23"
+                            name="hours" value="{{ $hours }}" />
+                        <label for="minutes">HOURS</label>
+                    </span>
+                    <span>
+                        <input class="time-input" type="number" min="0" max="59"
+                            name="minutes" value="{{ $minutes }}" />
+                        <label for="minutes">MINUTES</label>
+                    </span>
                     <button id="btn-new-invoice">REQUEST NEW INVOICE</button>
                 </div>
 
@@ -68,8 +75,10 @@
                     name="invoiceRequest"
                     value="{{ $invoiceRequest }}"
                     style="display: none">
+
                 <noscript>
-                <button id="btn-confirm-payment">I CONFIRM I HAVE PAID</button>
+                    <p>If you have paid, click here:</p>
+                    <button id="btn-confirm-payment">I CONFIRM I HAVE PAID</button>
                 </noscript>
             </form>
 

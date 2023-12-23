@@ -27,8 +27,11 @@ h1, p {
 }
 
 #time-box {
-    margin-top: 3em;
-    margin-bottom: 3em;
+    margin: 2.5em auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
 }
 
 .hash-content {
@@ -97,20 +100,19 @@ button:focus-within + .copied {
     border: bisque;
     border-radius: 5px;
     background: #932828;
-    margin: 1em auto;
     display: block
 }
 
 #btn-confirm-payment {
+    margin: 1em auto;
     background: green;
 }
 
-#time-input {
-    display: block;
-    margin: 0 auto;
+.time-input {
+    display: inline;
     padding: 8px;
     border-radius: 8px;
-    min-width: 200px;
+    width: 5em;
 }
 
 </style>
