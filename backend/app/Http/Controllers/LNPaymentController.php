@@ -17,6 +17,7 @@ class LNPaymentController extends Controller
         $fields = ['amount', 'invoiceId', 'invoiceRequest'];
         $hasInvoice = true;
         $satoshis_per_second = config('lnpaywall.payment.satoshis_per_second');
+        $min_time = config('lnpaywall.payment.min_seconds');
 
         foreach ($fields as $field) {
             if (!$request->has($field))
@@ -38,9 +39,9 @@ class LNPaymentController extends Controller
             $hours = $request->get('hours', 0);
             $time = 60*$minutes + 3600*$hours;
 
-            # minimum time is 5 minutes
-            if ($time < 300)
-                $time = 300;
+            # minimum time
+            if ($time < $min_time)
+                $time = $min_time;
 
             # compute amount
             $new_amount = $time * $satoshis_per_second;

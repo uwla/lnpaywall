@@ -30,6 +30,6 @@ return [
     */
     'payment' => [
         'satoshis_per_second' => env('LNPAY_SATOSHIS_PER_SECOND', 1),
-        'min_seconds' => env('LNPAY_MIN_SECONDS', 5),
+        'min_seconds' => env('LNPAY_MIN_SECONDS', 300),
     ]
 ];
