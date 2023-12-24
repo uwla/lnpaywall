@@ -14,7 +14,7 @@ body {
     display: flex;
     background: linear-gradient(#151c2e, #1b1f29);
     color: #fff;
-    padding: 24px 16px;
+    padding: 24px;
 }
 
 main {
@@ -27,11 +27,8 @@ h1, p {
 }
 
 #time-box {
-    margin: 2.5em auto;
+    margin: 3em auto;
     width: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: .75em;
 }
 
 .hash-content {
@@ -72,11 +69,10 @@ button {
     cursor: pointer;
     padding: 5px 15px;
     margin-left: auto;
-    position: relative;
     display: block;
     width: fit-content;
     border-radius: 8px;
-    top: -1em;
+    margin-top: 5px;
 }
 
 .copied {
@@ -100,11 +96,17 @@ button:focus-within + .copied {
     border: bisque;
     border-radius: 5px;
     background: #932828;
-    display: block
+    display: block;
+    margin: 1em auto;
+    font-weight: 700;
+    font-size: 105%;
+}
+
+#btn-new-invoice {
+    width: 100%;
 }
 
 #btn-confirm-payment {
-    margin: 1em auto;
     background: green;
 }
 
