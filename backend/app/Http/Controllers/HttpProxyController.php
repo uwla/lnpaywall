@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use GuzzleHttp\Client as HttpCLient;
 
@@ -37,6 +38,20 @@ class HttpProxyController extends Controller
         $content = $response->getBody()->getContents();
         $status_code = $response->getStatusCode();
         $headers = $this->filter_headers($response->getHeaders());
+
+        // get current session
+        $session = Request::session();
+
+        // get remaining seconds for current session
+        $end = $session->get('started_at', 0) + $session->get('time_paid', 0);
+        $remaining_seconds = max(0, $end - time());
+
+        // create a Carbon date for the expiration date of this session
+        $expire_date = Carbon::now()->addSeconds($remaining_seconds);
+
+        // add expiration headers to the HTTP response
+        $headers['Cache-Control'] = "max-age,{$remaining_seconds}";
+        $headers['Expire'] = $expire_date->toRfc1123String();
 
         // return the request
         return response($content, $status_code)->withHeaders($headers);
