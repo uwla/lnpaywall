@@ -19,7 +19,7 @@ class EnsureNotPaid extends EnsurePaidSats
     public function handle(Request $request, Closure $next): Response
     {
         // If the user has not made a payment, we allow him to proceed to the payment page.
-        if (! $this->hasPaid($request))
+        if (! $this->hasPaid())
             return $next($request);
 
         // Otherwise, we do not show the payment page.

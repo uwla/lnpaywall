@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SessionManager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use GuzzleHttp\Client as HttpCLient;
@@ -39,12 +40,8 @@ class HttpProxyController extends Controller
         $status_code = $response->getStatusCode();
         $headers = $this->filter_headers($response->getHeaders());
 
-        // get current session
-        $session = Request::session();
-
         // get remaining seconds for current session
-        $end = $session->get('started_at', 0) + $session->get('time_paid', 0);
-        $remaining_seconds = max(0, $end - time());
+        $remaining_seconds = SessionManager::getSessionRemainingTime();
 
         // create a Carbon date for the expiration date of this session
         $expire_date = Carbon::now()->addSeconds($remaining_seconds);

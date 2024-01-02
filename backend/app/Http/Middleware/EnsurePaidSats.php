@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\SessionManager;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class EnsurePaidSats
     public function handle(Request $request, Closure $next): Response
     {
         // If user has paid, allow him to proceed.
-        if ($this->hasPaid($request))
+        if ($this->hasPaid())
             return $next($request);
 
         // Otherwise, redirect him to payment page.
@@ -27,37 +28,22 @@ class EnsurePaidSats
     /**
      * Determine whether the user making the request has paid to access the web service.
      *
-     * @param  \Illuminate\Http\Request
      * @return boolean
      */
-    public function hasPaid(Request $request)
+    public function hasPaid()
     {
-        // Get the session associated with the request.
-        $session = $request->session();
-
         // has not paid
-        if ('y' != $session->get('paid', 'n'))
-        {
+        if (! SessionManager::userHasPaidSession())
             return false;
-        }
 
         // Payment done and this is the first access.
         // So, mark the beginning of this session.
-        if (! $session->has('started_at'))
-        {
-            $session->put('started_at', time());
-        }
+        if (! SessionManager::sessionHasStarted())
+            SessionManager::startSession();
 
-        // Payment done and already accessed before.
-        // Needs to verify if there is time remaining.
-        $start = $session->get('started_at', 0);
-        $time = $session->get('time_paid', 0);
-        if (time() > $start+$time)
+        if (SessionManager::timeExpired())
         {
-            // Time has expired. Delete session information.
-            $session->forget('started_at');
-            $session->forget('time_paid');
-            $session->forget('paid');
+            SessionManager::endSession();
             return false;
         }
 

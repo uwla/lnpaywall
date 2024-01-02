@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SessionManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -103,9 +104,8 @@ class LNPaymentController extends Controller
         else
             $val = 'n';
 
-        $session = $request->session();
-        $session->put('paid', $val);
-        $session->put('time_paid', $time);
+        SessionManager::markSessionPaymentAsConfirmed();
+        SessionManager::setSessionPaidTime($time);
 
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }
