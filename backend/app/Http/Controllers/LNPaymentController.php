@@ -98,14 +98,14 @@ class LNPaymentController extends Controller
         $amount = $res['tokens'];
         $time = $amount / $satoshis_per_second;
 
-        $val = '';
-        if ($paid)
-            $val = 'y';
-        else
-            $val = 'n';
+        $val = 'n';
 
-        SessionManager::markSessionPaymentAsConfirmed();
-        SessionManager::setSessionPaidTime($time);
+        if ($paid) {
+            $val = 'y';
+            SessionManager::markSessionPaymentAsConfirmed();
+            SessionManager::setSessionPaidTime($time);
+            SessionManager::startSession();
+        }
 
         return view('confirm', compact('paid', 'amount', 'invoiceId', 'invoiceRequest'));
     }

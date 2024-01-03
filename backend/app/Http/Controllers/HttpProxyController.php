@@ -50,6 +50,23 @@ class HttpProxyController extends Controller
         $headers['Cache-Control'] = "max-age,{$remaining_seconds}";
         $headers['Expire'] = $expire_date->toRfc1123String();
 
+        // get the content type
+        $content_type = $headers['Content-Type'] ??  $headers['content-type'] ?? '';
+
+        // if content type is not empty, it could be an array like this:
+        // ['text/html', 'charset=utf8']
+        // we need the first item.
+        if (is_array($content_type))
+            $content_type = implode(';', $content_type);
+
+        // add refresh meta tag
+        if (str_starts_with($content_type, 'text/html')) {
+            $meta_tag = "<meta http-equiv=\"refresh\" content=\"{$remaining_seconds};url='/lnpay/pay'\" />";
+            // append the meta tag right after the head
+            $replacement = '<head>' . "\n" . $meta_tag . "\n";
+            $content = preg_replace('/<head>/', $replacement, $content, 1);
+        }
+
         // return the request
         return response($content, $status_code)->withHeaders($headers);
     }

@@ -41,7 +41,7 @@ class SessionManager {
      * @return integer
      */
     public static function getSessionExpireTime() {
-        return self::session()->get(self::EXPIRE_AT, 0);
+        return (int) self::session()->get(self::EXPIRE_AT, 0);
     }
 
     /**
@@ -51,7 +51,7 @@ class SessionManager {
      */
     public static function getSessionRemainingTime() {
         $now = time();
-        $remaining = $now - self::getSessionExpireTime();
+        $remaining = self::getSessionExpireTime() - $now;
         return max(0, $remaining);
     }
 
@@ -80,7 +80,9 @@ class SessionManager {
      * @return void
      */
     public static function markSessionPaymentAsConfirmed() {
-        self::session()->put(self::PAID, self::PAID_CONFIRMED);
+        $session = self::session();
+        $session->put(self::PAID, self::PAID_CONFIRMED);
+        $session->save();
     }
 
      /**
@@ -89,7 +91,9 @@ class SessionManager {
      * @return void
      */
     public static function setSessionPaidTime($time) {
-        self::session()->put(self::PAID_TIME, $time);
+        $session = self::session();
+        $session->put(self::PAID_TIME, $time);
+        $session->save();
     }
 
     /**
@@ -98,7 +102,7 @@ class SessionManager {
      * @return boolean
      */
     public static function sessionHasStarted() {
-        $started_at = self::session()->get(SELF::EXPIRE_AT, -1);
+        $started_at = self::session()->get(SELF::EXPIRE_AT, 0);
         return $started_at > 0 && $started_at <= time();
     }
 
@@ -112,6 +116,7 @@ class SessionManager {
         $session = self::session();
         $time_paid = $session->get(self::PAID_TIME, 0);
         $session->put(SELF::EXPIRE_AT, time() + $time_paid);
+        $session->save();
     }
 
     /**
@@ -119,8 +124,10 @@ class SessionManager {
      *
      * @return void
      */
-    public static function endSession() {
-        self::session()->forget([self::PAID, self::EXPIRE_AT]);
+    public static function clearSession() {
+        $session = self::session();
+        $session->forget([self::PAID, self::PAID_TIME, self::EXPIRE_AT]);
+        $session->save();
     }
 
     /**

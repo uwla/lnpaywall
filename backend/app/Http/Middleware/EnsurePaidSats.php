@@ -38,12 +38,13 @@ class EnsurePaidSats
 
         // Payment done and this is the first access.
         // So, mark the beginning of this session.
-        if (! SessionManager::sessionHasStarted())
-            SessionManager::startSession();
+        // if (! SessionManager::sessionHasStarted()) {
+        //     SessionManager::startSession();
+        // }
 
-        if (SessionManager::timeExpired())
+        if (SessionManager::sessionHasStarted() && SessionManager::timeExpired())
         {
-            SessionManager::endSession();
+            SessionManager::clearSession();
             return false;
         }
 
